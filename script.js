@@ -88,7 +88,7 @@ Game.prototype.checkIfPlayerWon = function(player, other) {
   return other.choice.losesTo(player.choice);
 };
 
-// Console log functions PLease ignore the mess, it's not gonna stick around ;)
+// DOM manipulation functions Please ignore the mess, it's not gonna stick around ;)
 function endGameCallBack(x) {
   const humanScore = game.human.score;
   const computerScore = game.computer.score;
