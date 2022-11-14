@@ -1,6 +1,6 @@
 # ultra-RPS
 
-## Watch as two 'ai' players demonstrate how ultra ai works.
+## Watch as two 'ai' players demonstrate how ultra Rock Paper Scissors works.
 
 https://philip-clark.github.io/ultra-RPS/
 
