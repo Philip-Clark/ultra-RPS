@@ -4,10 +4,10 @@ function Choice(name, killers) {
   this.killers = killers;
 }
 
-Choice.prototype.losesTo = function(choice) {
+Choice.prototype.losesTo = function (choice) {
   return this.killers.includes(choice.name);
 };
-Choice.prototype.getName = function() {
+Choice.prototype.getName = function () {
   return this.name;
 };
 
@@ -18,15 +18,15 @@ function Player(name) {
   this.choice = null;
 }
 
-Player.prototype.scorePoint = function() {
+Player.prototype.scorePoint = function () {
   this.score += 1;
 };
 
-Player.prototype.chooseChoice = function(choice) {
+Player.prototype.chooseChoice = function (choice) {
   this.choice = choice;
 };
 
-Player.prototype.randomChoice = function(choices) {
+Player.prototype.randomChoice = function (choices) {
   this.choice = choices[Math.floor(Math.random() * choices.length)];
 };
 
@@ -39,10 +39,9 @@ function Game(human, computer, choices) {
   this.computer = computer;
 }
 
-Game.prototype.playRound = function() {
+Game.prototype.playRound = function () {
   this.computer.randomChoice(this.choices);
   this.human.randomChoice(this.choices);
-
 
   if (this.computer.choice == this.human.choice) {
     this.winner = 'draw';
@@ -59,7 +58,7 @@ Game.prototype.playRound = function() {
   }
 };
 
-Game.prototype.getWinner = function() {
+Game.prototype.getWinner = function () {
   if (this.winner != null) {
     if (this.winner == 'draw') {
       return 'draw';
@@ -69,10 +68,10 @@ Game.prototype.getWinner = function() {
   }
 };
 
-Game.prototype.playRounds = function(x, delay, roundCallBack, endGameCallBack) {
+Game.prototype.playRounds = function (x, delay, roundCallBack, endGameCallBack) {
   let i = x;
   const game = this;
-  const interval = setInterval(function() {
+  const interval = setInterval(function () {
     if (i > 0) {
       game.playRound();
       roundCallBack();
@@ -84,7 +83,7 @@ Game.prototype.playRounds = function(x, delay, roundCallBack, endGameCallBack) {
   }, delay);
 };
 
-Game.prototype.checkIfPlayerWon = function(player, other) {
+Game.prototype.checkIfPlayerWon = function (player, other) {
   return other.choice.losesTo(player.choice);
 };
 
@@ -96,12 +95,16 @@ function endGameCallBack(x) {
   console.log(
     `stats:\n${game.human.name} : ${humanScore}\n${game.computer.name} : ${computerScore}\nDraws : ${draws}`
   );
-  document.getElementById('win').innerText = `stats:\n${game.human.name} : ${humanScore}\n${game.computer.name} : ${computerScore}\nDraws : ${draws}`
+  document.getElementById(
+    'win'
+  ).innerText = `stats:\n${game.human.name} : ${humanScore}\n${game.computer.name} : ${computerScore}\nDraws : ${draws}`;
 }
 function roundCallBack() {
-  const choiceString = game.human.choice.losesTo(game.computer.choice)
+  let choiceString = game.human.choice.losesTo(game.computer.choice)
     ? `${game.computer.choice.name} beats ${game.human.choice.name}`
     : `${game.human.choice.name} beats ${game.computer.choice.name}`;
+
+  choiceString = game.human.choice == game.computer.choice ? `Draw` : choiceString;
   console.log(
     `-------------------------\n${game.getWinner()} won the round\n${choiceString}\n-------------------------\n`
   );
@@ -129,7 +132,6 @@ const computer1 = new Player('AI Bob');
 const computer2 = new Player('AI Sally');
 const game = new Game(computer1, computer2, choices);
 
-
 function start() {
   computer1.score = 0;
   computer2.score = 0;
@@ -139,5 +141,5 @@ function start() {
   const ms = document.getElementById('ms').value;
   const count = document.getElementById('count').value;
 
-  game.playRounds(count, ms, roundCallBack, endGameCallBack)
+  game.playRounds(count, ms, roundCallBack, endGameCallBack);
 }
